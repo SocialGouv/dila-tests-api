@@ -4,10 +4,10 @@
 
 You need Python 3.6+
 
-```
-mkvirtualenv dila-api-tests
-pip3 install -r requirements.txt
-cp .env.sample .env
+```sh
+$ mkvirtualenv dila-api-tests
+$ pip3 install -r requirements.txt
+$ cp .env.sample .env
 ```
 
 then fill .env secret values.
@@ -18,4 +18,6 @@ You can then create an application [here](https://developer.aife.economie.gouv.f
 
 ## Run
 
-python3 run.py
+```sh
+$ python3 run.py
+```
