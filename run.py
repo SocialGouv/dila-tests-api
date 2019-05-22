@@ -1,26 +1,31 @@
 import os
 import json
 from dotenv import load_dotenv
-from oauthlib.oauth2 import BackendApplicationClient
+import requests
 from requests_oauthlib import OAuth2Session
 
 API_HOST = "https://sandbox-api.aife.economie.gouv.fr"
 TOKEN_URL = 'https://sandbox-oauth.aife.economie.gouv.fr/api/oauth/token'
 
 # 1. connect using the "client credentials" grant type
-# cf https://requests-oauthlib.readthedocs.io/en/latest/oauth2_workflow.html#backend-application-flow
+# the regular authentication methods don't work, we are passing
+# the client id and secret as form data, as suggested by the PISTE team
 load_dotenv()
 client_id = os.getenv("OAUTH_CLIENT_ID")
 client_secret = os.getenv("OAUTH_CLIENT_SECRET")
-# print("client_id is %s, client_secret is %s" % (client_id, client_secret))
-client = BackendApplicationClient(client_id=client_id, scope="openid")
-oauth = OAuth2Session(client=client)
-token = oauth.fetch_token(
-  token_url=TOKEN_URL,
-  client_id=client_id,
-  client_secret=client_secret
+res = requests.post(
+  TOKEN_URL,
+  data={
+    "grant_type": "client_credentials",
+    "client_id": client_id,
+    "client_secret": client_secret,
+    "scope": "openid"
+  }
 )
+token = res.json()
 client = OAuth2Session(client_id, token=token)
+
+# import log_all_http
 
 # 2. try a random request
 payload = {
@@ -36,4 +41,5 @@ res = client.post(
   "%s/dila/legifrance/lf-engine-app/list/code" % API_HOST,
   data=json.dumps(payload)
 )
+print(f"status is {res.status_code}")
 print("res is %s" % res.json())
