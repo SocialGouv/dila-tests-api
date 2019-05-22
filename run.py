@@ -1,5 +1,4 @@
 import os
-import json
 from dotenv import load_dotenv
 import requests
 from requests_oauthlib import OAuth2Session
@@ -29,17 +28,15 @@ client = OAuth2Session(client_id, token=token)
 
 # 2. try a random request
 payload = {
-  "codeName": "Code civil",
-  "pageNumber": 1,
-  "pageSize": 10,
-  "sort": "TITLE_ASC",
-  "states": [
-    "VIGUEUR"
-  ]
+  "id": "KALIARTI000026231889"
 }
 res = client.post(
-  "%s/dila/legifrance/lf-engine-app/list/code" % API_HOST,
-  data=json.dumps(payload)
+  "%s/dila/legifrance/lf-engine-app/consult/kaliArticle" % API_HOST,
+  headers={
+    "Accept": "application/json",  # might be redundant
+    # "Content-Type": "application/json"
+  },
+  json=payload
 )
 print(f"status is {res.status_code}")
 print("res is %s" % res.json())
