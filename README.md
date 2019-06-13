@@ -1,23 +1,24 @@
 # DILA API Tests
 
-## Install
+## Setup
+
+Copy `.env.sample` to `.env` with your [PISTE AIFE](https://developer.aife.economie.gouv.fr) application Oauth Credentials.
+
+You can then create an application [here](https://developer.aife.economie.gouv.fr/apps) with the required API, and then open it and generate OAuth identifiers
+
+## Python example
 
 You need Python 3.6+
 
 ```sh
 $ mkvirtualenv dila-api-tests
 $ pip3 install -r requirements.txt
-$ cp .env.sample .env
+$ python3 run.py
 ```
 
-then fill .env secret values.
-
-You need to have an account on [PISTE AIFE](https://developer.aife.economie.gouv.fr), and to have been given access to the DILA API.
-
-You can then create an application [here](https://developer.aife.economie.gouv.fr/apps) with the required API, and then open it and generate OAuth identifiers
-
-## Run
+## JavaScript example
 
 ```sh
-$ python3 run.py
+$ yarn
+$ node run.js
 ```
